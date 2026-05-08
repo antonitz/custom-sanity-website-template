@@ -1,0 +1,54 @@
+# Dependencies
+node_modules
+.pnp
+.pnp.js
+
+# Testing
+coverage
+
+# Next.js
+.next
+out
+build
+dist
+
+# Production
+*.tsbuildinfo
+next-env.d.ts
+
+# Environment files
+.env
+.env*.local
+!.env.example
+
+# Vercel
+.vercel
+
+# Turbo
+.turbo
+
+# Sanity
+apps/studio/dist
+apps/web/sanity.types.ts
+apps/studio/sanity-typegen.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea
+*.swp
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Cache
+.cache
+.parcel-cache

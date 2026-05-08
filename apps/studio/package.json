@@ -1,0 +1,28 @@
+{
+  "name": "@smiling-bowtie/studio",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "sanity dev --port 3333",
+    "start": "sanity start",
+    "build": "sanity build",
+    "deploy": "sanity deploy",
+    "deploy-graphql": "sanity graphql deploy",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@sanity/icons": "^3.5.2",
+    "@sanity/image-url": "^1.1.0",
+    "@sanity/vision": "^3.65.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "sanity": "^3.65.1",
+    "styled-components": "^6.1.13"
+  },
+  "devDependencies": {
+    "@sanity/eslint-config-studio": "^5.0.1",
+    "@types/react": "^18.3.12",
+    "eslint": "^9.14.0",
+    "typescript": "^5.6.3"
+  }
+}
