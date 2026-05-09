@@ -2,12 +2,13 @@ import Link from 'next/link';
 import type { SiteSettings } from '@/lib/sanity/types';
 import { resolveCtaHref, isExternalLink } from '@/lib/links';
 import { SanityImg } from '@/components/ui/SanityImg';
+import { MobileMenu } from '@/components/MobileMenu';
 
 export function Header({ settings }: { settings?: SiteSettings | null }) {
   if (!settings) return null;
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur">
+    <header className="sticky top-0 z-30 border-b border-border bg-background/80 backdrop-blur">
       <div className="container-wide flex h-16 items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
           {settings.logo ? (
@@ -23,6 +24,7 @@ export function Header({ settings }: { settings?: SiteSettings | null }) {
           )}
         </Link>
 
+        {/* Desktop nav */}
         <nav className="hidden items-center gap-8 md:flex">
           {settings.navigation?.map((item, idx) => {
             const href = resolveCtaHref(item);
@@ -49,6 +51,9 @@ export function Header({ settings }: { settings?: SiteSettings | null }) {
             );
           })}
         </nav>
+
+        {/* Mobile nav */}
+        <MobileMenu navigation={settings.navigation} />
       </div>
     </header>
   );
