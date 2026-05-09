@@ -80,7 +80,7 @@ export function MobileMenu({ navigation }: Props) {
 
       {/* Drawer */}
       <div
-        className={`md:hidden fixed inset-y-0 right-0 z-50 w-full max-w-sm transform bg-background shadow-xl transition-transform duration-300 ease-out ${
+        className={`md:hidden fixed inset-y-0 right-0 z-50 w-full max-w-sm transform bg-white shadow-xl transition-transform duration-300 ease-out ${
           open ? 'translate-x-0' : 'translate-x-full'
         }`}
         role="dialog"
