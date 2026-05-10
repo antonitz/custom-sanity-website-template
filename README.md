@@ -1,4 +1,4 @@
-# Smiling Bowtie Website Template
+# Custom Sanity Website Template
 
 A production-ready template for building client websites fast. Hand off cleanly. Clients edit content without breaking design.
 
