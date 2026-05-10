@@ -2,14 +2,16 @@ import type { Metadata } from 'next';
 import { draftMode } from 'next/headers';
 import { VisualEditing } from 'next-sanity';
 import { sanityFetch } from '@/lib/sanity/fetch';
-import { siteSettingsQuery } from '@/lib/sanity/queries';
+import { siteSettingsQuery, sitewideFaqQuery } from '@/lib/sanity/queries';
 import { buildMetadata } from '@/lib/seo';
 import {
   JsonLd,
   organizationSchema,
   websiteSchema,
+  personSchema,
+  sitewideFaqSchema,
 } from '@/lib/structured-data';
-import type { SiteSettings } from '@/lib/sanity/types';
+import type { SiteSettings, SitewideFAQ } from '@/lib/sanity/types';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import './globals.css';
@@ -27,10 +29,16 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const settings = await sanityFetch<SiteSettings>({
-    query: siteSettingsQuery,
-    tags: ['siteSettings'],
-  });
+  const [settings, faq] = await Promise.all([
+    sanityFetch<SiteSettings>({
+      query: siteSettingsQuery,
+      tags: ['siteSettings'],
+    }),
+    sanityFetch<SitewideFAQ | null>({
+      query: sitewideFaqQuery,
+      tags: ['faq'],
+    }),
+  ]);
   const isDraft = (await draftMode()).isEnabled;
 
   return (
@@ -40,8 +48,10 @@ export default async function RootLayout({
           <>
             <JsonLd data={organizationSchema(settings)} />
             <JsonLd data={websiteSchema(settings)} />
+            <JsonLd data={personSchema(settings)} />
           </>
         )}
+        <JsonLd data={sitewideFaqSchema(faq)} />
       </head>
       <body>
         <Header settings={settings} />

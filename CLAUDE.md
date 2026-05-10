@@ -58,10 +58,24 @@ Client-specific changes go in:
 This template ships with:
 - Dynamic sitemap (`app/sitemap.ts`)
 - robots.txt (`app/robots.ts`)
-- JSON-LD structured data (Organization, WebSite, BreadcrumbList, Article, FAQPage)
+- JSON-LD structured data (Organization, WebSite, Person, FAQPage, BreadcrumbList, Article)
 - Canonical URLs on every page
 - Open Graph + Twitter cards
 - llms.txt for AI/LLM crawlers (AEO)
+- Semantic `<article>` tags on prose content blocks
+
+### Person schema (AI search visibility)
+Configured in Site Settings → Person (AEO) tab. Fields: name, jobTitle, description, image, location, profile URLs, expertise topics. When filled in, a Person JSON-LD schema is rendered on every page. AI search engines (ChatGPT, Perplexity, Google AI Overviews) use this to answer "who is [person]" queries.
+
+### Site-wide FAQ (JSON-LD + visible section)
+The `faq` document type is a singleton with an array of Q&A pairs. It drives:
+1. A FAQPage JSON-LD schema in the root layout (always rendered when FAQ data exists)
+2. A visible accordion section on the homepage (controlled by the "Show on Homepage" toggle)
+
+FAQ answers must match between the schema and the visible section — AI engines cross-check them. Both read from the same Sanity document, so they stay in sync automatically.
+
+### Anchor links for one-pager navigation
+The CTA schema supports `linkType: 'anchor'` for scrolling to sections by ID. Use this for header nav, footer nav, and buttons on one-pager sites.
 
 When adding new page types, ALWAYS:
 - Add to sitemap generator

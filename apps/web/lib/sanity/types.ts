@@ -22,8 +22,9 @@ export type SanityImage = {
 
 export type CTA = {
   label?: string;
-  linkType?: 'internal' | 'external' | 'email' | 'phone';
+  linkType?: 'internal' | 'anchor' | 'external' | 'email' | 'phone';
   internalLink?: { slug: string; title: string };
+  anchor?: string;
   externalUrl?: string;
   email?: string;
   phone?: string;
@@ -174,6 +175,29 @@ export type Post = {
   seo?: SEO;
 };
 
+export type PersonData = {
+  name?: string;
+  jobTitle?: string;
+  personDescription?: string;
+  image?: SanityImage;
+  locationCity?: string;
+  locationRegion?: string;
+  locationCountry?: string;
+  sameAs?: string[];
+  knowsAbout?: string[];
+};
+
+export type SitewideFAQ = {
+  _id: string;
+  headline?: string;
+  items?: Array<{
+    _key: string;
+    question?: string;
+    answer?: string;
+  }>;
+  showOnHomepage?: boolean;
+};
+
 export type SiteSettings = {
   siteName: string;
   description?: string;
@@ -195,5 +219,6 @@ export type SiteSettings = {
     foundingDate?: string;
     sameAs?: string[];
   };
+  person?: PersonData;
   defaultSeo?: SEO;
 };

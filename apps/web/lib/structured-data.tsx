@@ -5,7 +5,7 @@
  * Reference: https://schema.org
  */
 
-import type { FAQBlock, Post, SiteSettings } from './sanity/types';
+import type { FAQBlock, Post, SiteSettings, SitewideFAQ } from './sanity/types';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
 
@@ -96,6 +96,54 @@ export function articleSchema(post: Post, settings: SiteSettings) {
       '@type': 'WebPage',
       '@id': `${SITE_URL}/blog/${post.slug.current}`,
     },
+  };
+}
+
+export function personSchema(settings: SiteSettings) {
+  const person = settings.person;
+  if (!person?.name) return null;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: person.name,
+    url: SITE_URL,
+    image: person.image?.asset?.url || `${SITE_URL}/og-default.png`,
+    jobTitle: person.jobTitle,
+    worksFor: {
+      '@type': 'Organization',
+      name: settings.organization?.legalName || settings.siteName,
+      url: SITE_URL,
+    },
+    description: person.personDescription,
+    address:
+      person.locationCity || person.locationRegion || person.locationCountry
+        ? {
+            '@type': 'PostalAddress',
+            addressLocality: person.locationCity,
+            addressRegion: person.locationRegion,
+            addressCountry: person.locationCountry,
+          }
+        : undefined,
+    sameAs: person.sameAs?.length ? person.sameAs : undefined,
+    knowsAbout: person.knowsAbout?.length ? person.knowsAbout : undefined,
+  };
+}
+
+export function sitewideFaqSchema(faq: SitewideFAQ | null) {
+  if (!faq?.items?.length) return null;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faq.items
+      .filter((item) => item.question && item.answer)
+      .map((item) => ({
+        '@type': 'Question',
+        name: item.question,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: item.answer,
+        },
+      })),
   };
 }
 

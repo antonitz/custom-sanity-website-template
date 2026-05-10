@@ -11,6 +11,7 @@ A production-ready template for building client websites fast. Hand off cleanly.
 - Two layout modes baked in: one-pager (anchor scroll) and multi-page
 - 8 polished section blocks ready to use
 - SEO + AEO setup: sitemap, robots, JSON-LD, llms.txt, OG images
+- AI search optimization: Person + FAQPage schemas, semantic HTML, all editable from Studio
 - Contact form wired through Resend
 - Type-safe end to end (Sanity schema → GROQ → React)
 
@@ -61,6 +62,31 @@ See `docs/adding-new-blocks.md` or `CLAUDE.md` for the full step-by-step.
 ## Deployment
 
 See `docs/deployment.md`.
+
+## AI search optimization (AEO)
+
+This template is built to surface correctly in AI-powered search (ChatGPT, Perplexity, Google AI Overviews). All AEO content is managed from Sanity Studio — no code deploys needed.
+
+### Setup for a new site
+
+1. **Person schema** — Go to Site Settings → Person (AEO) tab. Fill in name, title, bio, location, profile URLs, and expertise. This generates a Person JSON-LD schema on every page so AI engines can answer "who is [person]" queries.
+
+2. **FAQ** — Create a new FAQ document in the Studio. Add questions and answers. Toggle "Show on Homepage" to render a visible accordion section. The JSON-LD schema is always included regardless of visibility.
+
+3. **Anchor navigation** — When setting up nav links, use the "Section (anchor)" link type to scroll to page sections by ID (e.g. `work`, `contact`, `faq`).
+
+### What renders automatically
+
+| Schema | Source | Where |
+|--------|--------|-------|
+| Organization | Site Settings → Organization | Every page |
+| WebSite | Site Settings → General | Every page |
+| Person | Site Settings → Person (AEO) | Every page (when filled in) |
+| FAQPage | FAQ document | Every page (when items exist) |
+| Article | Blog post data | Individual blog posts |
+| BreadcrumbList | Page hierarchy | Sub-pages |
+
+Content blocks use semantic `<article>` tags so AI crawlers correctly identify standalone prose.
 
 ## Client handoff
 

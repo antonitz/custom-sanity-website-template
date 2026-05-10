@@ -8,6 +8,7 @@ import { groq } from 'next-sanity';
 const ctaProjection = groq`
   label,
   linkType,
+  anchor,
   externalUrl,
   internalLink->{
     "slug": slug.current,
@@ -193,6 +194,17 @@ export const siteSettingsQuery = groq`
       foundingDate,
       sameAs
     },
+    person {
+      name,
+      jobTitle,
+      personDescription,
+      image { ${imageProjection} },
+      locationCity,
+      locationRegion,
+      locationCountry,
+      sameAs,
+      knowsAbout
+    },
     defaultSeo { ${seoFields} }
   }
 `;
@@ -266,5 +278,21 @@ export const allPostSlugsQuery = groq`
   *[_type == "post" && defined(slug.current)] {
     "slug": slug.current,
     _updatedAt
+  }
+`;
+
+/**
+ * Site-wide FAQ singleton (for AEO JSON-LD + visible FAQ section).
+ */
+export const sitewideFaqQuery = groq`
+  *[_type == "faq"][0] {
+    _id,
+    headline,
+    items[] {
+      _key,
+      question,
+      answer
+    },
+    showOnHomepage
   }
 `;

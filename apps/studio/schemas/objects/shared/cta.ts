@@ -18,6 +18,7 @@ export default defineType({
       options: {
         list: [
           { title: 'Internal Page', value: 'internal' },
+          { title: 'Section (anchor)', value: 'anchor' },
           { title: 'External URL', value: 'external' },
           { title: 'Email', value: 'email' },
           { title: 'Phone', value: 'phone' },
@@ -32,6 +33,21 @@ export default defineType({
       type: 'reference',
       to: [{ type: 'page' }],
       hidden: ({ parent }) => parent?.linkType !== 'internal',
+    }),
+    defineField({
+      name: 'anchor',
+      title: 'Section ID',
+      type: 'string',
+      description: 'The section ID to scroll to (e.g. "work", "contact", "faq")',
+      hidden: ({ parent }) => parent?.linkType !== 'anchor',
+      validation: (Rule) =>
+        Rule.custom((value, context) => {
+          const parent = context.parent as { linkType?: string };
+          if (parent?.linkType === 'anchor' && !value) {
+            return 'Section ID is required';
+          }
+          return true;
+        }),
     }),
     defineField({
       name: 'externalUrl',

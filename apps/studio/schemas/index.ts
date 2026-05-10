@@ -3,6 +3,7 @@ import page from './documents/page';
 import post from './documents/post';
 import author from './documents/author';
 import siteSettings from './documents/siteSettings';
+import faq from './documents/faq';
 
 // Shared objects
 import cta from './objects/shared/cta';
@@ -24,6 +25,7 @@ export const schemaTypes = [
   post,
   author,
   siteSettings,
+  faq,
 
   // Shared objects
   cta,

@@ -12,6 +12,7 @@ export default defineType({
     { name: 'footer', title: 'Footer' },
     { name: 'contact', title: 'Contact Info' },
     { name: 'organization', title: 'Organization' },
+    { name: 'person', title: 'Person (AEO)' },
     { name: 'seo', title: 'Default SEO' },
   ],
   fields: [
@@ -157,6 +158,77 @@ export default defineType({
           description:
             'Full URLs of official profiles on other sites (Twitter, LinkedIn, Wikipedia, etc).',
           of: [{ type: 'url' }],
+        },
+      ],
+    }),
+
+    defineField({
+      name: 'person',
+      title: 'Person (for AI Search)',
+      type: 'object',
+      group: 'person',
+      description:
+        'Generates a Person JSON-LD schema for AI search engines. Fill this in if the site represents an individual (founder, consultant, creator).',
+      fields: [
+        {
+          name: 'name',
+          title: 'Full Name',
+          type: 'string',
+          validation: (Rule) => Rule.required(),
+        },
+        {
+          name: 'jobTitle',
+          title: 'Job Title',
+          type: 'string',
+          description: 'e.g. "Founder and Builder", "CEO", "Consultant"',
+        },
+        {
+          name: 'personDescription',
+          title: 'Description',
+          type: 'text',
+          rows: 3,
+          description:
+            'One-paragraph bio. AI engines surface this in answers about who you are.',
+        },
+        {
+          name: 'image',
+          title: 'Headshot / Photo',
+          type: 'image',
+          options: { hotspot: true },
+          fields: [{ name: 'alt', title: 'Alt Text', type: 'string' }],
+        },
+        {
+          name: 'locationCity',
+          title: 'City',
+          type: 'string',
+        },
+        {
+          name: 'locationRegion',
+          title: 'Region / State / Province',
+          type: 'string',
+        },
+        {
+          name: 'locationCountry',
+          title: 'Country Code',
+          type: 'string',
+          description: 'Two-letter code, e.g. "CA", "US", "UK"',
+          validation: (Rule) => Rule.max(2),
+        },
+        {
+          name: 'sameAs',
+          title: 'Profile URLs',
+          type: 'array',
+          description:
+            'Full URLs of official profiles (LinkedIn, Instagram, Substack, etc).',
+          of: [{ type: 'url' }],
+        },
+        {
+          name: 'knowsAbout',
+          title: 'Knows About',
+          type: 'array',
+          description:
+            'Topics and expertise areas. AI engines use these to match queries.',
+          of: [{ type: 'string' }],
         },
       ],
     }),

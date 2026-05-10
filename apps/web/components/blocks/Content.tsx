@@ -6,7 +6,7 @@ export function Content({ block }: { block: ContentBlock }) {
   const { eyebrow, headline, body, image, layout = 'noImage' } = block;
 
   const textPart = (
-    <div className="max-w-prose">
+    <article className="max-w-prose">
       {eyebrow && (
         <p className="text-sm font-medium uppercase tracking-wider text-brand">
           {eyebrow}
@@ -20,7 +20,7 @@ export function Content({ block }: { block: ContentBlock }) {
           <PortableText value={body} />
         </div>
       )}
-    </div>
+    </article>
   );
 
   const imagePart = image && (

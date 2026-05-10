@@ -8,6 +8,8 @@ export function resolveCtaHref(cta?: CTA): string | null {
       return cta.internalLink.slug === 'home'
         ? '/'
         : `/${cta.internalLink.slug}`;
+    case 'anchor':
+      return cta.anchor ? `#${cta.anchor}` : null;
     case 'external':
       return cta.externalUrl || null;
     case 'email':
