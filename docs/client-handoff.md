@@ -46,6 +46,29 @@ Changes go live within seconds.
 2. Find what you need (logo, social links, contact info, etc.)
 3. Edit and **Publish**
 
+### Edit the FAQ section
+
+If your homepage has an FAQ section, you can edit it directly:
+
+1. Open the Studio
+2. Click **Home Page**
+3. Find the **FAQ** section in the sections list
+4. Click to expand — you can edit the heading, description, and each Q&A pair
+5. To add a new question, click the **+** button inside the FAQs list
+6. To reorder questions, drag them
+7. To remove a question, click the **trash** icon next to it
+8. Click **Publish** when done
+
+FAQ answers also feed into AI search engines (Google AI, ChatGPT, Perplexity), so keep answers accurate and in your own voice.
+
+### Change the favicon
+
+1. Click **Site Settings** → **General**
+2. Upload a square image (512×512 PNG recommended) to the **Favicon** field
+3. Click **Publish**
+
+The new favicon will appear in browser tabs and bookmarks after the next deploy.
+
 ### Use Visual Editing
 
 Click the **Presentation** tab in the Studio. You'll see your live site. Click on any text or image to edit it directly. This is the fastest way to make small tweaks.

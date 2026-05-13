@@ -174,6 +174,7 @@ export const siteSettingsQuery = groq`
     siteName,
     description,
     logo { ${imageProjection} },
+    favicon { asset->{ url } },
     navigation[] { ${ctaProjection} },
     footer {
       tagline,

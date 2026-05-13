@@ -2,6 +2,7 @@ import Link from 'next/link';
 import type { SiteSettings } from '@/lib/sanity/types';
 import { resolveCtaHref, isExternalLink } from '@/lib/links';
 import { SanityImg } from '@/components/ui/SanityImg';
+import { SocialLinks } from '@/components/ui/SocialIcons';
 import { MobileMenu } from '@/components/MobileMenu';
 
 export function Header({ settings }: { settings?: SiteSettings | null }) {
@@ -50,10 +51,16 @@ export function Header({ settings }: { settings?: SiteSettings | null }) {
               </Link>
             );
           })}
+          {settings.footer?.socialLinks && settings.footer.socialLinks.length > 0 && (
+            <SocialLinks links={settings.footer.socialLinks} />
+          )}
         </nav>
 
         {/* Mobile nav */}
-        <MobileMenu navigation={settings.navigation} />
+        <MobileMenu
+          navigation={settings.navigation}
+          socialLinks={settings.footer?.socialLinks}
+        />
       </div>
     </header>
   );

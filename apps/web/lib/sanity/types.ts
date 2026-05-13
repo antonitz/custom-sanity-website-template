@@ -202,6 +202,7 @@ export type SiteSettings = {
   siteName: string;
   description?: string;
   logo?: SanityImage;
+  favicon?: { asset?: { url?: string } };
   navigation?: CTA[];
   footer?: {
     tagline?: string;

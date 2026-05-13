@@ -1,25 +1,29 @@
 'use client';
 
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import type { CTA } from '@/lib/sanity/types';
 import { isExternalLink, resolveCtaHref } from '@/lib/links';
+import { SocialLinks } from '@/components/ui/SocialIcons';
+
+type SocialLink = {
+  platform: string;
+  url: string;
+};
 
 type Props = {
   navigation?: CTA[];
+  socialLinks?: SocialLink[];
 };
 
-export function MobileMenu({ navigation }: Props) {
+export function MobileMenu({ navigation, socialLinks }: Props) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
-  // Close menu when route changes
   useEffect(() => {
     setOpen(false);
   }, [pathname]);
 
-  // Lock body scroll when menu is open
   useEffect(() => {
     if (open) {
       document.body.style.overflow = 'hidden';
@@ -31,7 +35,6 @@ export function MobileMenu({ navigation }: Props) {
     };
   }, [open]);
 
-  // Close on Escape key
   useEffect(() => {
     function handleKey(e: KeyboardEvent) {
       if (e.key === 'Escape') setOpen(false);
@@ -44,81 +47,78 @@ export function MobileMenu({ navigation }: Props) {
 
   if (!navigation?.length) return null;
 
+  const close = () => setOpen(false);
+
   return (
     <>
       <button
         type="button"
-        onClick={() => setOpen(true)}
+        onClick={() => setOpen(!open)}
         className="md:hidden -mr-2 inline-flex h-10 w-10 items-center justify-center rounded-lg text-foreground hover:bg-muted"
-        aria-label="Open menu"
+        aria-label={open ? 'Close menu' : 'Open menu'}
         aria-expanded={open}
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="h-6 w-6"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-          />
-        </svg>
+        {open ? (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="h-6 w-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        ) : (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="h-6 w-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+            />
+          </svg>
+        )}
       </button>
 
-      {/* Backdrop */}
+      {/* Backdrop — below header */}
       <div
-        onClick={() => setOpen(false)}
-        className={`md:hidden fixed inset-0 z-40 bg-black/40 backdrop-blur-sm transition-opacity ${
+        onClick={close}
+        className={`md:hidden fixed inset-0 top-16 z-40 bg-black/20 transition-opacity ${
           open ? 'opacity-100' : 'pointer-events-none opacity-0'
         }`}
         aria-hidden="true"
       />
 
-      {/* Drawer */}
+      {/* Dropdown panel — below header, auto height */}
       <div
-        className={`md:hidden fixed inset-y-0 right-0 z-50 w-full max-w-sm transform bg-white shadow-xl transition-transform duration-300 ease-out ${
-          open ? 'translate-x-0' : 'translate-x-full'
+        className={`md:hidden fixed top-16 left-0 right-0 z-50 border-b border-border bg-white shadow-lg transition-all duration-200 ${
+          open
+            ? 'translate-y-0 opacity-100'
+            : '-translate-y-2 opacity-0 pointer-events-none'
         }`}
         role="dialog"
         aria-modal="true"
         aria-label="Mobile navigation"
       >
-        <div className="flex h-16 items-center justify-end border-b border-border px-6">
-          <button
-            type="button"
-            onClick={() => setOpen(false)}
-            className="-mr-2 inline-flex h-10 w-10 items-center justify-center rounded-lg text-foreground hover:bg-muted"
-            aria-label="Close menu"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="h-6 w-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
-        </div>
-
-        <nav className="flex flex-col px-6 py-6">
+        <nav className="flex flex-col px-6 py-2">
           {navigation.map((item, idx) => {
             const href = resolveCtaHref(item);
             if (!href || !item.label) return null;
             const external = isExternalLink(item);
 
             const className =
-              'block py-4 text-lg font-medium text-foreground hover:text-brand border-b border-border last:border-0';
+              'block py-4 text-lg font-medium text-foreground hover:text-brand border-b border-border';
 
             return external ? (
               <a
@@ -126,16 +126,22 @@ export function MobileMenu({ navigation }: Props) {
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={close}
                 className={className}
               >
                 {item.label}
               </a>
             ) : (
-              <Link key={idx} href={href} className={className}>
+              <a key={idx} href={href} onClick={close} className={className}>
                 {item.label}
-              </Link>
+              </a>
             );
           })}
+          {socialLinks && socialLinks.length > 0 && (
+            <div className="py-4">
+              <SocialLinks links={socialLinks} />
+            </div>
+          )}
         </nav>
       </div>
     </>

@@ -39,6 +39,14 @@ export default defineType({
       options: { hotspot: true },
       fields: [{ name: 'alt', title: 'Alt Text', type: 'string' }],
     }),
+    defineField({
+      name: 'favicon',
+      title: 'Favicon',
+      type: 'image',
+      group: 'general',
+      description:
+        'Square icon shown in browser tabs and bookmarks. Upload a square PNG (512×512 recommended). If left empty, a default is used.',
+    }),
 
     defineField({
       name: 'navigation',

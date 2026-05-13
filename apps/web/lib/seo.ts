@@ -83,5 +83,11 @@ export function buildMetadata({
       description: finalDescription,
       images: [ogImageUrl],
     },
+    ...(siteSettings?.favicon?.asset?.url && {
+      icons: {
+        icon: siteSettings.favicon.asset.url,
+        apple: siteSettings.favicon.asset.url,
+      },
+    }),
   };
 }
