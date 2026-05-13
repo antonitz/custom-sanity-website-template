@@ -4,19 +4,12 @@ import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import type { CTA } from '@/lib/sanity/types';
 import { isExternalLink, resolveCtaHref } from '@/lib/links';
-import { SocialLinks } from '@/components/ui/SocialIcons';
-
-type SocialLink = {
-  platform: string;
-  url: string;
-};
 
 type Props = {
   navigation?: CTA[];
-  socialLinks?: SocialLink[];
 };
 
-export function MobileMenu({ navigation, socialLinks }: Props) {
+export function MobileMenu({ navigation }: Props) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
@@ -137,11 +130,6 @@ export function MobileMenu({ navigation, socialLinks }: Props) {
               </a>
             );
           })}
-          {socialLinks && socialLinks.length > 0 && (
-            <div className="py-4">
-              <SocialLinks links={socialLinks} />
-            </div>
-          )}
         </nav>
       </div>
     </>

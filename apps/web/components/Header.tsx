@@ -51,16 +51,14 @@ export function Header({ settings }: { settings?: SiteSettings | null }) {
               </Link>
             );
           })}
+        </nav>
+
+        <div className="flex items-center gap-3">
           {settings.footer?.socialLinks && settings.footer.socialLinks.length > 0 && (
             <SocialLinks links={settings.footer.socialLinks} />
           )}
-        </nav>
-
-        {/* Mobile nav */}
-        <MobileMenu
-          navigation={settings.navigation}
-          socialLinks={settings.footer?.socialLinks}
-        />
+          <MobileMenu navigation={settings.navigation} />
+        </div>
       </div>
     </header>
   );
