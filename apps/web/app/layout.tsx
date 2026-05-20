@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { draftMode } from 'next/headers';
-import { VisualEditing } from 'next-sanity';
+import { VisualEditing } from 'next-sanity/visual-editing';
 import { sanityFetch } from '@/lib/sanity/fetch';
 import { siteSettingsQuery, sitewideFaqQuery } from '@/lib/sanity/queries';
 import { buildMetadata } from '@/lib/seo';

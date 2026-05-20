@@ -18,7 +18,12 @@ export async function sanityFetch<T>({
   tags?: string[];
   revalidate?: number | false;
 }): Promise<T> {
-  const isDraftMode = (await draftMode()).isEnabled;
+  let isDraftMode = false;
+  try {
+    isDraftMode = (await draftMode()).isEnabled;
+  } catch {
+    // draftMode() throws when called outside a request scope (e.g. generateStaticParams)
+  }
   const activeClient = isDraftMode ? draftClient : client;
 
   return activeClient.fetch<T>(query, params, {

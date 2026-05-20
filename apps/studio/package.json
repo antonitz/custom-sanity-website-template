@@ -13,15 +13,15 @@
   "dependencies": {
     "@sanity/icons": "^3.5.2",
     "@sanity/image-url": "^1.1.0",
-    "@sanity/vision": "^3.65.1",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "sanity": "^3.65.1",
-    "styled-components": "^6.1.13"
+    "@sanity/vision": "^5.26.0",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "sanity": "^5.26.0",
+    "styled-components": "^6.4.2"
   },
   "devDependencies": {
     "@sanity/eslint-config-studio": "^5.0.1",
-    "@types/react": "^18.3.12",
+    "@types/react": "^19.2.15",
     "eslint": "^9.14.0",
     "typescript": "^5.6.3"
   }
