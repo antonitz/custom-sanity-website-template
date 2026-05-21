@@ -169,13 +169,19 @@ export function faqSchema(block: FAQBlock) {
  * Render a JSON-LD <script> tag.
  * Use in pages and layouts.
  */
+function safeJsonLdStringify(data: Record<string, unknown>): string {
+  return JSON.stringify(data)
+    .replace(/</g, '\\u003c')
+    .replace(/>/g, '\\u003e')
+    .replace(/&/g, '\\u0026');
+}
+
 export function JsonLd({ data }: { data: Record<string, unknown> | null }) {
   if (!data) return null;
   return (
     <script
       type="application/ld+json"
-      // eslint-disable-next-line react/no-danger
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+      dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(data) }}
     />
   );
 }
